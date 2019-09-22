@@ -3,8 +3,69 @@ import './App.css';
 import menuItems from './menuItems';
 
 class App extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+        checked: true
+    }
+  }
   render() {
-  console.log('Mayo', menuItems);
+  let menuChoices;
+  let firstChoice;
+  let secondChoice;
+  let thirdChoice;
+  menuChoices= menuItems.map(item => {
+    const { name, choices, related } = item;
+    const { checked } = this.state
+
+    firstChoice = choices.map(item => {
+      return (
+        <li key={item.name}>
+        <input type="checkbox"/>
+        <span className="checkmark">{item.name}</span>
+        </li>
+      );
+    });
+
+
+    secondChoice = related.map(item => {
+      const { choices } = item;
+      thirdChoice = choices.map(item => {
+        return (
+          <li key={item.name}>
+          <input type="checkbox"/>
+          <span className="checkmark">{item.name}</span>
+          </li>
+        );
+      });
+      return (
+        <li key={item.name}>
+        <input type="checkbox"/>
+        <span className="checkmark">{item.name}</span>
+        <ul>
+          {thirdChoice}
+        </ul>
+        </li>
+      );
+    });
+    return (
+      <ul>
+      <li key={name}>
+        <input type="checkbox" checked={checked}/>
+        <span className="checkmark">{name}</span>
+        <ul>
+        {firstChoice}
+        </ul>
+        <ul>
+          <li className="extras">
+            <span>You might also want:</span>
+          </li>
+          {secondChoice}
+        </ul>
+      </li>
+      </ul>
+    );
+  });
   return (
     <div className="App">
       <header className="App-header">
@@ -12,80 +73,7 @@ class App extends React.Component {
           Restaurant Menu
         </h1>
         <nav>
-          <ul>
-            <li>
-              <input type="checkbox"/>
-              <span className="checkmark">Salad</span>
-                <ul>
-                  <li>
-                    <input type="checkbox"/>
-                    <span className="checkmark">Santa Fe</span>
-                  </li>
-                  <li>
-                    <input type="checkbox"/>
-                    <span className="checkmark">Greek</span>
-                  </li>
-                  <li>
-                    <input type="checkbox"/>
-                    <span className="checkmark">Asian</span>
-                  </li>
-                  <li>
-                    <span className="extras">You might also want:</span>
-                  </li>
-                  <li>
-                    <input type="checkbox"/>
-                    <span className="checkmark">Dressing</span>
-                    <ul>
-                      <li>
-                        <input type="checkbox"/>
-                        <span className="checkmark">Italian</span>
-                      </li>
-                      <li>
-                        <input type="checkbox"/>
-                        <span className="checkmark">Blue Cheese</span>
-                      </li>
-                      <li>
-                        <input type="checkbox"/>
-                        <span className="checkmark">Ranch</span>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <input type="checkbox"/>
-                    <span className="checkmark">Bread</span>
-                  </li>
-                </ul>
-            </li>
-            <li>
-              <input type="checkbox"/>
-              <span className="checkmark">Entree</span>
-            </li>
-            <li>
-              <input type="checkbox"/>
-              <span className="checkmark">Soup</span>
-              <ul>
-                <li>
-                  <input type="checkbox"/>
-                  <span className="checkmark">Minestrone</span>
-                </li>
-                <li>
-                  <input type="checkbox"/>
-                  <span className="checkmark">Hot and Sour</span>
-                </li>
-                <li>
-                  <input type="checkbox"/>
-                  <span className="checkmark">Miso</span>
-                </li>
-                <li>
-                  <span className="extras">You might also want:</span>
-                </li>
-                <li>
-                  <input type="checkbox"/>
-                  <span className="checkmark">Bread</span>
-                </li>
-              </ul>
-            </li>
-          </ul>
+          {menuChoices}
         </nav>
       </header>
     </div>
