@@ -21,7 +21,14 @@ ul {
   text-size-adjust: 1;
 }
 
-.extras {
+.extras_display {
   padding-top: 1rem;
+}
+
+.display {
   display: 0;
+}
+
+.hide {
+  display: none;
 }
